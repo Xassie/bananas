@@ -1,22 +1,36 @@
 from math import factorial as fac
+import argparse
 
 
-while True:
-    try:
-        N = input('Please enter N and K separated by space:\n').split(' ')
-        assert len(N) == 2
-        N = [int(x) for x in N]
-        N, K = N
-        break
+# cmd interface
+parser = argparse.ArgumentParser(description='You\'ve got to enter indexes')
+parser.add_argument('--k', action='store', dest='K', default=None, type=int)
+parser.add_argument('--n', action='store', dest='N', default=None, type=int)
+R = vars(parser.parse_args())
+N, K = [R['N'], R['K']]
+del R, parser
 
-    except AssertionError:
-        print('Make sure to enter just two numbers. No more. No less.\n')
 
-    except ValueError:
-        print('Make sure you\'ve entered integers.\n')
+# if valuables are not defined then input
+if not (N and K):
+
+    while True:
+        try:
+            N = input('Please enter N and K separated by space:\n').split(' ')
+            assert len(N) == 2
+            N = [int(x) for x in N]
+            N, K = N
+            break
+
+        except AssertionError:
+            print('Make sure to enter just two numbers. No more. No less.\n')
+
+        except ValueError:
+            print('Make sure you\'ve entered integers.\n')
 
 matrix = []
 
+# Actually filling in all the numbers
 for n in range(0, N):
     matrix.append([])
     for k in range(0, K):
@@ -27,6 +41,7 @@ for n in range(0, N):
                 int(fac(n + 1) / (fac(k + 1) * fac(n - k)))
             )
 
+# Calculating averages
 matrix.append([])
 for k in range(0, K):
     calc = 0
@@ -42,8 +57,9 @@ for n in range(0, N):
 
 matrix[N].append(0)
 
+# Output
 for n in range(0, N + 1):
     s = ''
     for k in range(0, K + 1):
-        s += str(matrix[n][k]) + ' '
+        s += str(matrix[n][k]).center(3, ' ')
     print(s)
