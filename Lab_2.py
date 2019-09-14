@@ -16,7 +16,8 @@ if not (N and K):
 
     while True:
         try:
-            N = input('Please enter N and K separated by space:\n').split(' ')
+            N = input('Please enter integer numbers N and '
+                      'K separated by space:\n').split(' ')
             N = [int(x) for x in N]
             assert len(N) == 2
             N, K = N
