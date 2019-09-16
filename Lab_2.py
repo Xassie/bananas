@@ -17,7 +17,7 @@ def main():
     parser.add_argument('-k', action='store', dest='K', default=None,
                         type=int, help='Amount of columns in the matrix')
     R = vars(parser.parse_args())
-    N, K = [R['N'], R['K']]
+    N, K = R['N'], R['K']
     del R, parser
 
     # if valuables are not defined then input
@@ -28,15 +28,15 @@ def main():
                 N = input('Please enter integer numbers N and '
                           'K separated by space:\n').split(' ')
                 N = [int(x) for x in N]
-                assert len(N) == 2
-                N, K = N
+                if len(N) != 2:
+                    print('Make sure to enter two numbers. No more. No less.\n')
+                    continue
                 break
-
-            except AssertionError:
-                print('Make sure to enter two numbers. No more. No less.\n')
 
             except ValueError:
                 print('Make sure you\'ve entered integers.\n')
+
+    N, K = N
 
     matrix = []
 
