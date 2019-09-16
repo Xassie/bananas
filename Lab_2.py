@@ -3,9 +3,12 @@ import argparse
 
 
 # cmd interface
-parser = argparse.ArgumentParser(description='You\'ve got to enter indexes')
-parser.add_argument('--k', action='store', dest='K', default=None, type=int)
-parser.add_argument('--n', action='store', dest='N', default=None, type=int)
+parser = argparse.ArgumentParser(description='You can enter matrix\'s size N x'
+                                             ' K beforehand via --n and --k')
+parser.add_argument('--n', action='store', dest='N', default=None,
+                    type=int, help='Amount of lines in the matrix')
+parser.add_argument('--k', action='store', dest='K', default=None,
+                    type=int, help='Amount of columns in the matrix')
 R = vars(parser.parse_args())
 N, K = [R['N'], R['K']]
 del R, parser
@@ -58,9 +61,11 @@ for n in range(0, N):
 
 matrix[N].append(0)
 
-# Output
+# Output that is actually not necessary ¯\_(ツ)_/¯
+blanks = N//5 + 2
+
 for n in range(0, N + 1):
     s = ''
     for k in range(0, K + 1):
-        s += str(matrix[n][k]).center(3, ' ')
+        s += str(matrix[n][k]).center(blanks, ' ')
     print(s)
