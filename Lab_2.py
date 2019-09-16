@@ -5,9 +5,9 @@ import argparse
 # cmd interface
 parser = argparse.ArgumentParser(description='You can enter matrix\'s size N x'
                                              ' K beforehand via --n and --k')
-parser.add_argument('--n', action='store', dest='N', default=None,
+parser.add_argument('-n', action='store', dest='N', default=None,
                     type=int, help='Amount of lines in the matrix')
-parser.add_argument('--k', action='store', dest='K', default=None,
+parser.add_argument('-k', action='store', dest='K', default=None,
                     type=int, help='Amount of columns in the matrix')
 R = vars(parser.parse_args())
 N, K = [R['N'], R['K']]
