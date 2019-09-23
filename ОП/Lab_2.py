@@ -1,3 +1,5 @@
+# Python 3.7.2
+
 """ Шпаков Станислав
     Ки19-16/2б
     Вариант 19
@@ -36,7 +38,7 @@ def main():
             except ValueError:
                 print('Make sure you\'ve entered integers.\n')
 
-    N, K = N
+        N, K = N
 
     matrix = []
 
