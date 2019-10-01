@@ -40,10 +40,10 @@ def main():
     # getting similar numbers
     while (len(source) != 0):
         check = source.pop(0)
-    if (check in source):
-        similarities.append(check)
-        while check in source:
-            source.remove(check)
+        if (check in source):
+            similarities.append(check)
+            while check in source:
+                source.remove(check)
 
     print(similarities)
 
