@@ -1,0 +1,1 @@
+Remove-Item -Path .\"'bout to commit massacre"\*.jpg -recurse -force

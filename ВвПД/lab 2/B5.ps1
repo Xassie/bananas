@@ -1,0 +1,1 @@
+Get-ChildItem -Path '.\Folder 1' | sort Length | ft Name, Length -auto | Out-File res.txt

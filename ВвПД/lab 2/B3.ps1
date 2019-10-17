@@ -1,0 +1,1 @@
+Copy-Item -Path .\"Folder 1"\*.jpg -Destination .\"'bout to commit massacre"\

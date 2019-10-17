@@ -1,0 +1,1 @@
+Move-Item -Path .\"Folder 1"\This1file.txt -Destination .\"Folder 2"\
