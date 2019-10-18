@@ -1,1 +1,1 @@
-Get-ChildItem -Path '.\Folder 1' | sort Length | ft Name, Length -auto | Out-File res.txt
+Get-ChildItem -Path '.\Folder 1' | Sort-Object Length | Format-Table Name, Length -auto | Out-File res.txt | Start-Process .\res.txt
