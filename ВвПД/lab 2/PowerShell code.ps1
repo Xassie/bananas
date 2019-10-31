@@ -5,7 +5,7 @@ Remove-Item -Path .\"'bout to commit massacre"\*.jpg -recurse -force
 Copy-Item -Path .\"Folder 1"\*.jpg -Destination .\"'bout to commit massacre"\
 
 Start-Process -FilePath  "https://stackoverflow.com/"
-[System.Diagnostics.Process]::Start("https://i.imgur.com/8NIxBDF.gif")
-(New-Object -Com Shell.Application).Open("https://myanimelist.net/profile/Xassie")
+Start-Process -FilePath "https://i.imgur.com/8NIxBDF.gif"
+Start-Process -FilePath "https://myanimelist.net/profile/Xassie"
 
 Get-ChildItem -Path '.\Folder 1' | sort Length | ft Name, Length -auto | Out-File res.txt
