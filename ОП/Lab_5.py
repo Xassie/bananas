@@ -8,7 +8,7 @@ import argparse
 SHIFT = 3
 CODES = {
     'en' : 26,
-    'ru' : 33,
+    'ru' : 32,
 }
 
 
@@ -51,10 +51,12 @@ def test_encoding():
     assert encode(104, 97, 'en') == 'e'
     assert encode(1089, 1072, 'ru') == 'о'
     assert encode(99, 97, 'en') == 'z'
+    assert encode(1074, 1072, 'ru') == 'я'
 
 def determine(character):
-
+    print(character)
     code = ord(character)
+    print(code)
     if (65 <= code <= 90):
         lan = 'en'
         slide = 65
@@ -67,6 +69,8 @@ def determine(character):
     elif (1072 <= code <= 1103):
         lan = 'ru'
         slide = 1072
+    elif (code in (1105, 1025)):
+        raise SystemError('THIS SYMBOL DOES NOT EXIST APPARENTLY')
     else:
         lan = None
         slide = 0
