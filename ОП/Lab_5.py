@@ -42,7 +42,7 @@ def encode(ccode, slide, lang):
     if slide:
         alp = CODES[lang]
         ccode -= SHIFT + slide
-        if ccode <= 0:
+        if ccode < 0:
             ccode += alp
     return chr(ccode + slide)
 
@@ -54,9 +54,7 @@ def test_encoding():
     assert encode(1074, 1072, 'ru') == 'я'
 
 def determine(character):
-    print(character)
     code = ord(character)
-    print(code)
     if (65 <= code <= 90):
         lan = 'en'
         slide = 65
