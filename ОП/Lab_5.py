@@ -54,6 +54,13 @@ def test_encoding():
     assert encode(1074, 1072, 'ru') == 'я'
 
 def determine(character):
+
+   # Because screw this letter. 
+    if character == 'ё':
+        character == 'е'
+    elif character == 'Ё':
+        character = 'Е'
+    
     code = ord(character)
     if (65 <= code <= 90):
         lan = 'en'
@@ -67,8 +74,6 @@ def determine(character):
     elif (1072 <= code <= 1103):
         lan = 'ru'
         slide = 1072
-    elif (code in (1105, 1025)):
-        raise SystemError('THIS SYMBOL DOES NOT EXIST APPARENTLY')
     else:
         lan = None
         slide = 0
@@ -83,12 +88,12 @@ def test_determination():
     assert determine('c') == (99, 97, 'en')
 
 def read():
-    with open('text.txt', "r") as file:
+    with open('./text.txt', "r") as file:
         text = file.readlines()
     return text
 
 def write(res):
-    with open('result.txt', "w") as file:
+    with open('./result.txt', "w") as file:
         file.write(res)
 
 def main():
