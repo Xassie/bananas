@@ -56,12 +56,11 @@ def test_encoding():
 def determine(character):
 
    # Because screw this letter. 
-    if character == 'ё':
-        character == 'е'
-    elif character == 'Ё':
-        character = 'Е'
-    
     code = ord(character)
+    if code == 1105:
+        code = 1077
+    elif code == 1025:
+        code = 1045
     if (65 <= code <= 90):
         lan = 'en'
         slide = 65
