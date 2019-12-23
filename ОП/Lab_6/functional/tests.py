@@ -1,6 +1,6 @@
 import pytest
-import quicksort as qs
-
+import sys
+import functional.qsort as qs
 
 def test_quicks_int_input():
     assert qs.quicks([51, 26, 478, 5, ]) == [5, 26, 51, 478]
