@@ -1,6 +1,10 @@
 """ Python 3.7.4
 Шпаков Станислав
 Вариант 25
+
+Coding program.
+Raw text should be in text.txt
+The result will be in result.txt
 """
 
 import argparse
@@ -13,6 +17,8 @@ CODES = {
 
 
 def listed(value):
+    """ New type just to make it easier """
+
     if value.lower() not in ['encode', 'decode',]:
         raise argparse.ArgumentTypeError("Your option is not listed")
     return value
@@ -25,6 +31,10 @@ def cmd():
     return R.N.lower()
 
 def decode(ccode, slide, lang):
+    """ Decoding mechanism.
+        Shifts given element SHIFT(3) elements forth.
+    """
+
     if slide:
         alp = CODES[lang]
         ccode -= slide - SHIFT
@@ -39,6 +49,10 @@ def test_decoding():
     assert decode(1053, 1040, 'ru') == 'Р'
 
 def encode(ccode, slide, lang):
+    """ Encoding mechanism
+        Shifts given element SHIFT(3) elemens back
+    """
+
     if slide:
         alp = CODES[lang]
         ccode -= SHIFT + slide
@@ -54,8 +68,11 @@ def test_encoding():
     assert encode(1074, 1072, 'ru') == 'я'
 
 def determine(character):
+    """ Determine char type.
+        Checks to what group given character belongs.
+        It returns the language and the slide you'll need to perform
+    """
 
-   # Because screw this letter. 
     code = ord(character)
     if code == 1105:
         code = 1077
@@ -86,22 +103,22 @@ def test_determination():
     assert determine('с') == (1089, 1072, 'ru')
     assert determine('c') == (99, 97, 'en')
 
-def read():
+def fread():
     with open('./text.txt', "r") as file:
         text = file.readlines()
     return text
 
-def write(res):
+def fwrite(res):
     with open('./result.txt', "w") as file:
         file.write(res)
 
 def main():
-    message = read()
+    message = fread()
     result = ''
     for line in message:
         for i in line:
             result += OPTION[cmd()](*determine(i))
-    write(result)
+    fwrite(result)
 
 
 OPTION = {
