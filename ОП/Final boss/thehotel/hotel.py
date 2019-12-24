@@ -6,26 +6,36 @@ class Hotel:
     
     def __init__(self):
         self.rooms = []
+        self.roomers = []
         self.clientbase = []
         self.clients_init()
         self.rooms_init()
-        self.check_roomers
+        self.roomers_init()
+        self.check_roomers()
     
     def rooms_init(self):
         import csv
         with open('.\\data\\rooms.csv', 'r') as file:
-            reader = csv.DictReader(file, delimiter='\t')
+            reader = csv.DictReader(file, delimiter=';')
             for line in reader:
                 self.rooms.append(Room(**dict(line)))
 
     def rooms_rewrite(self):
         pass
 
+
+    def roomers_init(self):
+        import csv
+        with open('.\\data\\roomers.csv', 'r') as file:
+            reader = csv.DictReader(file, delimiter=';')
+            for line in reader:
+                self.roomers.append(Roomer(**dict(line)))
+
     
     def clients_init(self):
         import csv
         with open('.\\data\\clientbase.csv', 'r') as file:
-            reader = csv.DictReader(file, delimiter='\t')
+            reader = csv.DictReader(file, delimiter=';')
             for line in reader:
                 self.clientbase.append(Client(**dict(line)))
 
@@ -43,26 +53,30 @@ class Hotel:
                 continue
             comm = input("if you'd like to add a comment - this is a good time for it\n>>> ")
             break
-        self.clientbase.append(Client(len(self.clientbase+2, *dat, comm)))
+        self.clientbase.append(Client(*[len(self.clientbase)+2, *dat, comm]))
         self.clients_append()
         
-        
-
 
     def new_roomer(self):
         pass
 
     
-    def exp_roomer(self):
+    def rewrite_roomers(self):
         pass
 
 
     def check_roomers(self):
-        pass
-
+        a = datetime.datetime.now()
+        a = datetime.date(a.year, a.month, a.day)
+        for i in enumerate(self.roomers):
+            if datetime.date(i[1].moving_out.split('/')) < a:
+                self.roomers.pop(i[0])
+        self.rewrite_roomers()
     
-    def movein(self):
-        pass
+    def movein(self, client, num, moving_out, notes=''):
+        a = datetime.datetime.now()
+        self.roomers.append(Roomer(*client.info, num, f'{a.year}/{a.month}/{a.day}', moving_out, notes))
+        
 
         
 

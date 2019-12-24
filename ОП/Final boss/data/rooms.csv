@@ -1,2 +1,2 @@
-number	capacity	comfort	cost	busy
-1	2	Fine	1000	
+number;capacity;comfort;cost;busy
+1;2;Fine;100;

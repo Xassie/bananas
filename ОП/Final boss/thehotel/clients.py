@@ -9,10 +9,13 @@ class Client:
         self.comment = comment
 
     def __str__(self):
-        return f'{self.name} {self.surname} {self.lastname}. Identity: {self.data}. Comment: "{self.comment}""'
+        return f'{self.name} {self.surname} {self.lastname}. Identity: {self.passp}. Comment: "{self.comment}""'
 
     def identity(self):
-        return (self.name, self.surname, self.lastname, self.passp)
+        return (self.id, self.name, self.surname, self.lastname, self.passp, self.comment)
+
+    def wfriendly(self):
+        return (self.name,)
 
 
 class Roomer:
