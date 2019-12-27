@@ -3,12 +3,28 @@
     Вариант 27
 """
 
-from thehotel.hotel import *
+import argparse
+
+def cmd():
+        parser = argparse.ArgumentParser(description='Choose the way of visualisation.')
+        parser.add_argument('N', action='store', help='Graphic or text visualisation')
+        R = parser.parse_args()
+        return R.N
+
+def visint():
+    pass
+
+def textint():
+    import text_interface.interface as inf
+    inf.Interface()
 
 def main():
-    hotel = Hotel()
-    for i in hotel.rooms:
-        print(i)
+    op = cmd()
+    if op.lower() == 'graphic':
+        visint()
+    elif op.lower() == 'text':
+        textint()
+    
 
 
 if __name__ == '__main__':

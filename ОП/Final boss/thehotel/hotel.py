@@ -1,5 +1,6 @@
 import datetime
 from thehotel.clients import *
+from csv import DictReader, DictWriter
 
 
 class Hotel:
@@ -14,55 +15,66 @@ class Hotel:
         self.check_roomers()
     
     def rooms_init(self):
-        import csv
         with open('.\\data\\rooms.csv', 'r') as file:
-            reader = csv.DictReader(file, delimiter=';')
+            reader = DictReader(file, delimiter=';')
             for line in reader:
                 self.rooms.append(Room(**dict(line)))
 
     def rooms_rewrite(self):
-        pass
+        names = []
+        for i in self.rooms[0]:
+            names.append(i)
+        with open('.\\data\\rooms.csv', 'w') as file:
+            writer = DictWriter(file, fieldnames=names, delimiter=';')
+            writer.writeheader()
+            writer.writerows(self.rooms)
 
 
     def roomers_init(self):
-        import csv
         with open('.\\data\\roomers.csv', 'r') as file:
-            reader = csv.DictReader(file, delimiter=';')
+            reader = DictReader(file, delimiter=';')
             for line in reader:
                 self.roomers.append(Roomer(**dict(line)))
 
     
     def clients_init(self):
-        import csv
         with open('.\\data\\clientbase.csv', 'r') as file:
-            reader = csv.DictReader(file, delimiter=';')
+            reader = DictReader(file, delimiter=';')
             for line in reader:
                 self.clientbase.append(Client(**dict(line)))
 
 
-    def clients_append(self):
-        pass
+    def clients_append(self, client):
+        name = []
+        for i in client:
+            name.append(i)
+        with open('.\\data\\roomers.csv', 'a') as file:
+            writer = DictWriter(file, fieldnames=name, delimiter=';')
+            writer.writerows(client)
 
     
     def new_client(self):
         while True:
-            dat = input('Please enter your Name, Surname, Lastname '
-                      'and passport_id. Separate by space\n>>> ')
+            dat = input('>>> ')
+            if dat.lower == 'return':
+                break
             dat = dat.split(' ')
             if len(dat) != 4:
                 continue
             comm = input("if you'd like to add a comment - this is a good time for it\n>>> ")
+            self.clientbase.append(Client(*[len(self.clientbase)+2, *dat, comm]))
+            self.clients_append(self.clientbase[-1].wfriendly())
             break
-        self.clientbase.append(Client(*[len(self.clientbase)+2, *dat, comm]))
-        self.clients_append()
-        
-
-    def new_roomer(self):
-        pass
 
     
     def rewrite_roomers(self):
-        pass
+        names = []
+        for i in self.roomers[0]:
+            names.append(i)
+        with open('.\\data\\roomers.csv', 'w') as file:
+            writer = DictWriter(file, fieldnames=names, delimiter=';')
+            writer.writeheader()
+            writer.writerows(self.roomers)
 
 
     def check_roomers(self):
@@ -76,9 +88,9 @@ class Hotel:
     def movein(self, client, num, moving_out, notes=''):
         a = datetime.datetime.now()
         self.roomers.append(Roomer(*client.info, num, f'{a.year}/{a.month}/{a.day}', moving_out, notes))
+        self.rewrite_roomers()
         
 
-        
 
 class Room:
     
