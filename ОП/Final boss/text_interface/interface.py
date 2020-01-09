@@ -59,7 +59,3 @@ class Interface:
 
     def isroomed(self):
         pass
-
-            
-            
-            

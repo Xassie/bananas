@@ -10,6 +10,7 @@ Ui_InfoWindow, QtBaseClass = uic.loadUiType('vis_interface\\RoomerInfo.ui')
 Ui_NotRoomerWindow, QtBaseClass = uic.loadUiType('vis_interface\\notRoomer.ui')
 Ui_RoomRentWindow, QtBaseClass = uic.loadUiType('vis_interface\\RoomRent.ui')
 
+
 class Help(QtWidgets.QMainWindow, HELP):
     def __init__(self, parent=None):
         super(Help, self).__init__(parent)
@@ -23,7 +24,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.user = None
         self.roomed = None
         self.startMainWindow()
-    
+
     def startHelp(self):
         win = Help(self)
         win.show()
@@ -41,6 +42,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.Back.clicked.connect(self.startMainWindow)
         self.ui.ConfirmRegs.clicked.connect(self.regInit)
         self.ui.actionHelp.triggered.connect(self.startHelp)
+
+    def hasNumbers(self, inputString):
+        return any(char.isdigit() for char in inputString)
 
     def regInit(self):
         info = [
@@ -62,7 +66,18 @@ class MainWindow(QtWidgets.QMainWindow):
                 msg.exec_()
                 fine = 0
                 break
-        
+
+        for i in info[1:4]:
+            if self.hasNumbers(i):
+                msg = QtWidgets.QMessageBox()
+                msg.setIcon(QtWidgets.QMessageBox.Warning)
+                msg.setText("Do you really")
+                msg.setInformativeText('Have nums in name? No.')
+                msg.setWindowTitle("Error")
+                msg.exec_()
+                fine = 0
+                break
+
         if fine:
             self.hotel.clientbase.append(Client(*info))
             self.hotel.clients_append(self.hotel.clientbase[-1].wfriendly())
@@ -73,7 +88,7 @@ class MainWindow(QtWidgets.QMainWindow):
             msg.setWindowTitle("Gratz!")
             msg.exec_()
             self.startMainWindow()
-        
+
     def logInit(self):
         self.user = None
         self.roomed = None
@@ -85,7 +100,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.users.setText(ids)
         font = QtGui.QFont('Narkisim', 10, QtGui.QFont.Bold)
         self.ui.users.setFont(font)
-        
+
         self.ui.Back.clicked.connect(self.startMainWindow)
         self.ui.Login.clicked.connect(self.logging)
         self.ui.actionHelp.triggered.connect(self.startHelp)
@@ -104,7 +119,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 msg.setInformativeText('Enter another one.')
                 msg.setWindowTitle("Error")
                 msg.exec_()
-        
+
         except ValueError:
                 msg = QtWidgets.QMessageBox()
                 msg.setIcon(QtWidgets.QMessageBox.Critical)
@@ -115,6 +130,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def check(self):
         roomer = None
+        self.hotel.check_roomers()
         for p in self.hotel.roomers:
             if self.user.id == p.clientInfo.id:
                 roomer = True
@@ -122,14 +138,14 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.startInfoWindow()
         if not roomer:
             self.startnotRoomerWindow()
-        
+
     def startnotRoomerWindow(self):
         self.ui = Ui_NotRoomerWindow()
         self.ui.setupUi(self)
         self.ui.Back.clicked.connect(self.logInit)
         self.ui.actionHelp.triggered.connect(self.startHelp)
         self.ui.RentRoom.clicked.connect(self.startRoomRentWindow)
-    
+
     def startRoomRentWindow(self):
         self.ui = Ui_RoomRentWindow()
         self.ui.setupUi(self)
@@ -146,34 +162,52 @@ class MainWindow(QtWidgets.QMainWindow):
     def rooming(self):
         try:
             num = int(self.ui.Number.text())
-            found = False
-            for r in self.hotel.rooms:
-                if r.number == num:
-                    found = True
-                    if not r.busy:
-                        self.hotel.movein(self.user, r, int(self.ui.duration.text()))
-                        msg = QtWidgets.QMessageBox()
-                        msg.setIcon(QtWidgets.QMessageBox.Question)
-                        msg.setText("Success!")
-                        msg.setInformativeText('Welcome to our hotel!')
-                        msg.setWindowTitle('Done')
-                        msg.exec_()
-                        self.check()
-                    else:
-                        msg = QtWidgets.QMessageBox()
-                        msg.setIcon(QtWidgets.QMessageBox.Warning)
-                        msg.setText('Room is busy')
-                        msg.setInformativeText('Pick another one.')
-                        msg.setWindowTitle("Whoopsy..")
-                        msg.exec_()
-            if not found:
+            dur = int(self.ui.duration.text())
+            if dur >= 0:
+                if dur <= 1000000:
+                    found = False
+                    for r in self.hotel.rooms:
+                        if r.number == num:
+                            found = True
+                            if not r.busy:
+                                self.hotel.movein(self.user, r, dur)
+                                msg = QtWidgets.QMessageBox()
+                                msg.setIcon(QtWidgets.QMessageBox.Question)
+                                msg.setText("Success!")
+                                msg.setInformativeText('Welcome to our hotel!')
+                                msg.setWindowTitle('Done')
+                                msg.exec_()
+                                self.check()
+                            else:
+                                msg = QtWidgets.QMessageBox()
+                                msg.setIcon(QtWidgets.QMessageBox.Warning)
+                                msg.setText('Room is busy')
+                                msg.setInformativeText('Pick another one.')
+                                msg.setWindowTitle("Whoopsy..")
+                                msg.exec_()
+                    if not found:
+                            msg = QtWidgets.QMessageBox()
+                            msg.setIcon(QtWidgets.QMessageBox.Critical)
+                            msg.setText("No such room")
+                            msg.setInformativeText('Try harder.')
+                            msg.setWindowTitle("Error")
+                            msg.exec_()
+                else:
                     msg = QtWidgets.QMessageBox()
                     msg.setIcon(QtWidgets.QMessageBox.Critical)
-                    msg.setText("No such room")
-                    msg.setInformativeText('Try harder.')
+                    msg.setText("Hey!")
+                    msg.setInformativeText('You are living long, bruh?\n'
+                                           'Go away with that.')
                     msg.setWindowTitle("Error")
                     msg.exec_()
-        
+            else:
+                msg = QtWidgets.QMessageBox()
+                msg.setIcon(QtWidgets.QMessageBox.Critical)
+                msg.setText("Hey!")
+                msg.setInformativeText('You can\'t go back in time\nCan you?')
+                msg.setWindowTitle("Error")
+                msg.exec_()
+
         except ValueError:
             msg = QtWidgets.QMessageBox()
             msg.setIcon(QtWidgets.QMessageBox.Critical)
@@ -198,14 +232,31 @@ class MainWindow(QtWidgets.QMainWindow):
         if ok:
             try:
                 text = int(text)
-                self.hotel.expansion(self.roomed, text)
-                msg = QtWidgets.QMessageBox()
-                msg.setIcon(QtWidgets.QMessageBox.Question)
-                msg.setText('Success!')
-                msg.setInformativeText('Hope you\'ll enjoy your time.')
-                msg.setWindowTitle("All done!")
-                msg.exec_()
-                self.check()
+                if text > 0:
+                    if text <= 1000000:
+                        self.hotel.expansion(self.roomed, text)
+                        msg = QtWidgets.QMessageBox()
+                        msg.setIcon(QtWidgets.QMessageBox.Question)
+                        msg.setText('Success!')
+                        msg.setInformativeText('Hope you\'ll enjoy your time.')
+                        msg.setWindowTitle("All done!")
+                        msg.exec_()
+                        self.check()
+                    else:
+                        msg = QtWidgets.QMessageBox()
+                        msg.setIcon(QtWidgets.QMessageBox.Critical)
+                        msg.setText("Hey!")
+                        msg.setInformativeText('You are living long, huh?\n Go away with that.')
+                        msg.setWindowTitle("Error")
+                        msg.exec_()
+
+                else:
+                    msg = QtWidgets.QMessageBox()
+                    msg.setIcon(QtWidgets.QMessageBox.Critical)
+                    msg.setText("Hey!")
+                    msg.setInformativeText('You can\'t go back in time\nCan you?')
+                    msg.setWindowTitle("Error")
+                    msg.exec_()
 
             except ValueError:
                 msg = QtWidgets.QMessageBox()
@@ -214,8 +265,6 @@ class MainWindow(QtWidgets.QMainWindow):
                 msg.setInformativeText('Enter days as an int')
                 msg.setWindowTitle("Ouchie.")
                 msg.exec_()
-
-
 
     def byebye(self):
         self.hotel.kickout(self.roomed, self.user.id)
