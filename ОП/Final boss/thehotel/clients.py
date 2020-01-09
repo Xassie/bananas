@@ -9,7 +9,7 @@ class Client:
         self.comment = comment
 
     def __str__(self):
-        return f'ID: {self.id} - {self.name} {self.surname} {self.lastname}. Identity: {self.passp}. Comment: "{self.comment}""'
+        return f'[ID: {self.id}] - {self.name} {self.surname} {self.lastname}. Identity: {self.passp}. Comment: "{self.comment}"'
 
     def identity(self):
         return (self.id, self.name, self.surname, self.lastname, self.passp, self.comment)

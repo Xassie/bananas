@@ -1,5 +1,5 @@
 import sys
-from PyQt5 import uic, QtWidgets
+from PyQt5 import uic, QtWidgets, QtGui, QtCore
 from thehotel.hotel import *
 
 HELP, QtBaseClass = uic.loadUiType('vis_interface\\help.ui')
@@ -82,7 +82,10 @@ class MainWindow(QtWidgets.QMainWindow):
         ids = ''
         for i in self.hotel.clientbase:
             ids += str(i) + '\n'
-        self.ui.users.setText(ids[:-2])
+        self.ui.users.setText(ids)
+        font = QtGui.QFont('Narkisim', 10, QtGui.QFont.Bold)
+        self.ui.users.setFont(font)
+        
         self.ui.Back.clicked.connect(self.startMainWindow)
         self.ui.Login.clicked.connect(self.logging)
         self.ui.actionHelp.triggered.connect(self.startHelp)
@@ -136,7 +139,9 @@ class MainWindow(QtWidgets.QMainWindow):
         text = ''
         for i in self.hotel.rooms:
             text += str(i) + '\n'
-        self.ui.Rooms.setText(text[:-2])
+        self.ui.Rooms.setText(text)
+        font = QtGui.QFont('Narkisim', 9, QtGui.QFont.Bold)
+        self.ui.Rooms.setFont(font)
 
     def rooming(self):
         try:
@@ -185,6 +190,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.RoomersDesk.setText(self.roomed.info())
         self.ui.Leave.clicked.connect(self.byebye)
         self.ui.Expand.clicked.connect(self.expandit)
+        font = QtGui.QFont('Narkisim', 14, QtGui.QFont.Bold)
+        self.ui.RoomersDesk.setFont(font)
 
     def expandit(self):
         text, ok = QtWidgets.QInputDialog.getText(self, 'Expansion', 'So.. How many days?')

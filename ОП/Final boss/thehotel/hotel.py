@@ -146,7 +146,7 @@ class Room:
             a = True
         else:
             a = False
-        return f'Room #{self.number} for {self.capacity} ppl. Quality={self.comfort} for {self.cost} rub. Busy: {a}'
+        return f'Room #{self.number} for {self.capacity} ppl. {self.comfort} Quality for {self.cost} rub. Busy: {a}'
 
     def wfry(self):
         return {
