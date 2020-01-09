@@ -12,11 +12,12 @@ def cmd():
         return R.N
 
 def visint():
-    pass
+    import vis_interface.interface
+    vis_interface.interface.main()
 
 def textint():
-    import text_interface.interface as inf
-    inf.Interface()
+    import text_interface.interface
+    text_interface.interface.Interface()
 
 def main():
     op = cmd()

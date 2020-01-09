@@ -27,9 +27,34 @@ class Client:
 
 class Roomer:
     
-    def __init__(self, info, num, moved_in, moving_out, notes=None):
+    def __init__(self, info, room, moved_in, moving_out):
         self.clientInfo = info
-        self.room = num
+        self.room = room
         self.moved_in = moved_in
         self.moving_out = moving_out
-        self.notes = notes
+
+    def __str__(self):
+        return {
+            'info' : self.clientInfo.id,
+            'num' : self.room.number,
+            'moved_in' : self.moved_in,
+            'moving_out' : self.moving_out,
+        }
+
+    def nnn(self):
+        return {
+            'info' : self.clientInfo.id,
+            'num' : self.room.number,
+            'moved_in' : self.moved_in,
+            'moving_out' : self.moving_out,
+        }
+
+    def info(self):
+        a =  f'Hey, {self.clientInfo.name}! Welcome back!\n'\
+             f'You are living in a room number {self.room.number}, which is:\n'\
+             f'1. {self.room.comfort} quality.\n2. Can fit upto {self.room.capacity} people.\n'\
+             f'3. Always waiting for you to come back\n'\
+             f'You have moved in on {self.moved_in}.\n'\
+             f'You will not be welcomed here after {self.moving_out}\n'\
+             f'Thank you for using vHotel!'
+        return a
