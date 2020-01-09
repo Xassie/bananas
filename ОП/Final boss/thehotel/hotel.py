@@ -139,7 +139,7 @@ class Room:
         self.capacity = int(capacity)
         self.comfort = comfort
         self.cost = float(cost)
-        self.busy = bool(busy)
+        self.busy = busy
 
     def __str__(self):
         if self.busy:
