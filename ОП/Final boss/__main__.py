@@ -20,7 +20,7 @@ def visint():
 
 def textint():
     import text_interface.interface
-    text_interface.interface.Interface()
+    text_interface.interface.main()
 
 
 def main():
