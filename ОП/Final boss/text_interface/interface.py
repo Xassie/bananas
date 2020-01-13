@@ -12,7 +12,7 @@ class Base:
             '0x18431': '\n<><> Please choose one of the following. <><>\n',
             '0x139': 'back',
             'exit': self.exitprogram,
-            'help' : ''
+            'help': ''
         }
         self.stage = 'beginning'
         self.stagelist = {
@@ -32,7 +32,7 @@ class Base:
         self.roomed = None
 
         self.run()
-    
+
     def hasNumbers(self, inputString):
         return any(char.isdigit() for char in inputString)
 
@@ -46,7 +46,6 @@ class Base:
     def run(self):
         while self.work:
             self.stagelist[self.stage]()
-
 
     def wishudesu(self, options='', types='str', msg=''):
         if options:
@@ -86,7 +85,7 @@ class Base:
     def checktype(self, cl, op):
         if (cl == 'str'):
             return 1
-        
+
         elif (cl == 'pos'):
             if op.isdigit():
                 if int(op) > 0:
@@ -111,7 +110,7 @@ class Base:
             else:
                 self.stage = desu
                 break
-    
+
     def register(self):
         back = False
         print('|||| Oh, you are new?\n|||| Please give use the following information'
@@ -200,9 +199,10 @@ class Base:
             else:
                 regID = desu
                 break
-        
+
         while not back:
-            desu = self.wishudesu(msg='|| If you want additional comment - it is right time for it.\n')
+            desu = self.wishudesu(msg='|| If you want additional comment '
+                                      '- it is right time for it.\n')
             if desu in self.errors:
                 if self.errors[desu] == 'back':
                     self.stage = 'beginning'
@@ -218,13 +218,13 @@ class Base:
             else:
                 comm = desu
                 break
-        
+
         if not back:
             info = [len(self.hotel.clientbase)+1, name, surname, lastname, regID, comm]
             self.hotel.clientbase.append(Client(*info))
             print('|||| You\'ve been registered. Welcome!\n')
             self.stage = 'beginning'
-    
+
     def login(self):
         back = False
         self.user = None
@@ -235,7 +235,8 @@ class Base:
 
         print(f'|||| Here are currently available users\n{ids}')
         while not back:
-            desu = self.wishudesu(msg='|| Please enter the ID of the user you want to login\n', types='pos')
+            desu = self.wishudesu(msg='|| Please enter the ID of the user '
+                                      'you want to login\n', types='pos')
 
             if desu in self.errors:
                 if self.errors[desu] == 'back':
@@ -389,8 +390,8 @@ class Base:
 
             else:
                 if desu < 1000000:
-                    dur = desu
-                    print(f'\n|||| You have succesfully expanded your rent for {dur} days.\n')
+                    self.hotel.expansion(self.roomed, desu)
+                    print(f'\n|||| You have succesfully expanded your rent for {desu} days.\n')
                     self.stage = 'check'
                     break
                 else:
