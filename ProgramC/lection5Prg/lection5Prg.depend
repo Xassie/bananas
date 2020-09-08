@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1588344465 source:/home/den/information/job/ikit/2019-2020/OP/Lections/lection_7/lection5Prg/functions.c
+	<math.h>
+	"structure.h"
+
+1588342157 /home/den/information/job/ikit/2019-2020/OP/Lections/lection_7/lection5Prg/structure.h
+
+1588345025 source:/home/den/information/job/ikit/2019-2020/OP/Lections/lection_7/lection5Prg/main.c
+	<stdio.h>
+	<stdlib.h>
+	"structure.h"
+	"functions.h"
+
+1588342729 /home/den/information/job/ikit/2019-2020/OP/Lections/lection_7/lection5Prg/functions.h
+

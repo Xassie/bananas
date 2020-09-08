@@ -9,6 +9,7 @@ int** input(int* vsize, int* hsize)
     char check = '\0';
     int const range = 40;
 
+	// Asking about the size
     printf("\nHow many lines should matrix have?\n");
     while (scanf("%d%c", &n, &check, 1) != 2  || check != '\n' || n <= 0)
     {
@@ -26,6 +27,7 @@ int** input(int* vsize, int* hsize)
             ;
     }
 
+	// Manual or random input
     int fill = 0;
     check = '\0';
     printf("\nHow do you want to fill the array?\n1. Random\n2. Manual\n");
@@ -35,13 +37,16 @@ int** input(int* vsize, int* hsize)
         while (getchar() != '\n')
             ;
     }
+	// "random"
     srand(time(NULL));
 
+	// Memory allocation
     int** arr = (int **)malloc(sizeof(int*) * n);
     for (int i=0; i < n; i++)
         arr[i] = (int*)malloc(sizeof(int) * m);
     int num = 0;
 
+	// Filling with numbers manually or randomly depending on the answer above
     for (int i=0; i<n; i++)
     for (int j=0; j<m; j++)
     {
@@ -65,6 +70,7 @@ int** input(int* vsize, int* hsize)
     return arr;
 }
 
+	// Func to free matrix
 void arrfree(int ***arr, int n)
 {
     for (int i = 0; i < n; i++)
@@ -81,6 +87,7 @@ int main() {
     int** source = NULL;
     int choice;
 
+	// Infinite loop of choices
     while (1)
     {
         printf("\nWhatcha want?\n1. Enter new info\n2. "
@@ -94,6 +101,7 @@ int main() {
         switch (choice)
         {
 
+			// New matrix. Frees previous one if it exists
             case 1:
                 if (source != NULL)
                     for (int i=0; i<vsize; i++)
@@ -105,6 +113,7 @@ int main() {
                 source = input(&vsize, &hsize);
                 break;
 
+			// Proceed matrix. No func cause I forgot
             case 2:
                 if (source != NULL)
                 {
@@ -117,6 +126,8 @@ int main() {
                         while (getchar() != '\n');
                     }
 
+					// Checking for the angle and rotating
+					// Nothing much to say. Just refilling
                     switch ((number % 360)) {
                         case 0:
                             break;
@@ -191,7 +202,7 @@ int main() {
                     break;
                 }
 
-
+			// Output on screen.
             case 3:
                 if (source != NULL)
                 {
